@@ -1,16 +1,53 @@
 # OpenMemory
+**Language / 语言:** [中文版 README](README-zh.md)
 
 OpenMemory is your personal memory layer for LLMs - private, portable, and open-source. Your memories live locally, giving you complete control over your data. Build AI applications with personalized memories while keeping your data secure.
 
-## Recent Fixes
+## MCP Improvements Analysis
 
-This fork includes critical fixes for MCP (Model Context Protocol) integration:
+### Issues with the Original Project
 
-- **Fixed FastMCP initialization**: Removed unsupported `description` and `version` parameters that caused server startup failures
-- **Fixed add_memories tool**: Converted dictionary return values to JSON strings to resolve MCP validation errors
-- **Improved error handling**: Enhanced MCP tool compatibility with proper string return types
+The original OpenMemory project encountered several challenges with MCP (Model Context Protocol) integration:
 
-These fixes resolve the "no tools or prompts" issue in Cursor and other MCP clients.
+1. **FastMCP Initialization Failure** - Use of unsupported parameters caused "no tools or prompts" errors
+2. **Memory Client Dependency Issues** - Server crashes when external dependencies became unavailable
+3. **MCP Tool Response Format Errors** - Returning dictionary objects violated MCP protocol requirements
+4. **SSE Route Handling Issues** - Poor context variable management
+
+### Improvements in the Current Project
+
+This project addresses the above issues with comprehensive fixes:
+
+1. **FastMCP Initialization Fix** - Removed unsupported parameters for proper initialization
+2. **Lazy Loading Memory Client** - Graceful error handling and fallback mechanisms
+3. **Standardized MCP Tool Responses** - All tools now return JSON string format
+4. **Improved SSE Route Management** - Proper context variable handling and multi-user support
+5. **Enhanced Permissions and Access Control** - Application-based memory access permission checks
+
+### New Tools Added
+
+**New MCP Tools:**
+
+1. **`get_memory_stats`** - Get memory statistics
+   - Function: Returns user's total memory count, recent 7-day memory count, and other statistics
+   - Purpose: Helps users understand their memory storage status
+
+2. **`check_connection`** - Check connection status
+   - Function: Checks OpenMemory service connection status and memory client availability
+   - Purpose: Connection diagnostics and system status monitoring
+
+### Issues Resolved
+
+- ✅ "no tools or prompts" error has been fixed
+- ✅ MCP clients can now properly recognize tools
+- ✅ Server continues running when external dependencies are unavailable
+- ✅ Tool calls return correct JSON format
+- ✅ Multi-user concurrent access supported
+- ✅ New status monitoring and statistics tools added
+
+---
+
+
 
 ![OpenMemory](https://github.com/user-attachments/assets/3c701757-ad82-4afa-bfbe-e049c2b4320b)
 
